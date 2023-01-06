@@ -29,7 +29,7 @@
 <script>
   import Modal from './common/Modal.vue'
   export default {
-    data:function(){
+    data(){
       return{
         newTodoItem: "",
         showModal:false
@@ -37,7 +37,7 @@
       }
     },
     methods:{
-      addTodo:function(){
+      addTodo(){
         // console.log(this.newTodoItem)
         //저장하는 로직
         if(this.newTodoItem !== ''){
@@ -47,7 +47,7 @@
           this.showModal = !this.showModal;
         }
       },
-      clearIntut:function(){
+      clearIntut(){
         this.newTodoItem = "";
       },
       

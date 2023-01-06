@@ -17,12 +17,12 @@
   export default {
     props:['propsdata'],  
     methods:{
-      removeTodo:function(todoItem,index){
+      removeTodo(todoItem,index){
         this.$emit('removeItem',todoItem,index);
 
         
       },
-      toggleComplate:function(todoItem,index){
+      toggleComplate(todoItem,index){
        this.$emit('toggleItem',todoItem,index)
       }
     }
