@@ -5,18 +5,35 @@
     
       <span class="addContainer" @:click="addTodo">
         <i class="fa-solid fa-plus addBtn"></i>
+        
       </span>
-    
+
+
+      <modal :show="showModal" @close="showModal = false">
+      <template #header>
+        <h3>경고</h3>
+        <i class="fa-solid fa-circle-xmark closeModalBtn" @click="showModal = false"></i>
+      </template>
+      <template #body>
+        <h3>무언가를 입력하세요.</h3>
+      </template>
+      <template #footer>
+        <h3>copy right</h3>
+      </template>
+    </modal>
+
 
   </div>
 </template>
 
 <script>
-
+  import Modal from './common/Modal.vue'
   export default {
     data:function(){
       return{
-        newTodoItem: ""
+        newTodoItem: "",
+        showModal:false
+        
       }
     },
     methods:{
@@ -24,16 +41,21 @@
         // console.log(this.newTodoItem)
         //저장하는 로직
         if(this.newTodoItem !== ''){
-          var obj= {completed: false, item:this.newTodoItem}
-          localStorage.setItem(this.newTodoItem,JSON.stringify(obj))
+          this.$emit('addTodoItem', this.newTodoItem)
           this.clearIntut();
+        }else{
+          this.showModal = !this.showModal;
         }
       },
       clearIntut:function(){
         this.newTodoItem = "";
-        
-      }
-    }
+      },
+      
+    },
+    components: {
+        Modal
+       },
+ 
   }
 </script>
 
@@ -71,4 +93,10 @@ input:focus{
   color: white;
   vertical-align:middle;
 }
+
+.closeModalBtn{
+  color: #42b983;
+}
+
+
 </style>

@@ -1,42 +1,29 @@
 <template>
   <div>
-    <ul>
-      <li v-for="(todoItem,index) in todoItems" :key="todoItem.item" class="shadow">
+    <transition-group name="list" tag="ul">
+    
+      <li v-for="(todoItem,index) in propsdata" :key="todoItem.item" class="shadow">
         <i class="fa-solid fa-check checkBtn" v-bind:class="{checkBtnCompleted:todoItem.completed}" @click="toggleComplate(todoItem,index)"></i>
         <span :class= "{textCompleted:todoItem.completed}"> {{ todoItem.item }}</span>
-        <span class="removeBtn" @click="remove(todoItem,index)">
+        <span class="removeBtn" @click="removeTodo(todoItem,index)">
           <i class="fa-solid fa-trash-can"></i>
         </span>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
 <script>
   export default {
-    data:function(){
-      return{
-        todoItems: []
-      }
-    },
-    created:function(){
-      if(localStorage.length > 0){
-        for(var i=0; i<localStorage.length; i++){
-          this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
-          // this.todoItems.push(localStorage.key(i))
-        }
-      }
-    },
+    props:['propsdata'],  
     methods:{
-      remove:function(todoItem,index){
-        console.log(todoItem,index);
-        localStorage.removeItem(todoItem);
-        this.todoItems.splice(index,1)
+      removeTodo:function(todoItem,index){
+        this.$emit('removeItem',todoItem,index);
+
+        
       },
-      toggleComplate:function(todoItem){
-        todoItem.completed = !todoItem.completed;
-        localStorage.removeItem(todoItem.item);
-        localStorage.setItem(todoItem.item,JSON.stringify(todoItem));
+      toggleComplate:function(todoItem,index){
+       this.$emit('toggleItem',todoItem,index)
       }
     }
   }
@@ -78,5 +65,13 @@ li{
   color:#b3adad;
 }
 
+/* 리스트 아이템 트랜지션효과*/
 
+.list-enter-active, .list-leave-active{
+  transition: all 2s
+}
+.list-enter-from, .list-leave-to{
+  opacity:0;
+  transform:translateY(30px);
+}
 </style>
