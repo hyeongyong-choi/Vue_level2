@@ -5,13 +5,19 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex'
+
   export default {
     methods:{
-      clearTodo(){
-        // this.$emit('clearTodo');
-        this.$store.commit('clearAllItem')
-      }
-    }
+      // clearTodo(){
+      //   // this.$emit('clearTodo');
+      //   this.$store.commit('clearAllItem')
+      // },
+      ...mapMutations({
+        clearTodo : 'clearAllItem'
+      })
+    },
+  
   }
 </script>
 
