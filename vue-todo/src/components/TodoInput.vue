@@ -41,7 +41,8 @@
         // console.log(this.newTodoItem)
         //저장하는 로직
         if(this.newTodoItem !== ''){
-          this.$emit('addTodoItem', this.newTodoItem)
+          // this.$emit('addTodoItem', this.newTodoItem)
+          this.$store.commit('addOnetem', this.newTodoItem)
           this.clearIntut();
         }else{
           this.showModal = !this.showModal;

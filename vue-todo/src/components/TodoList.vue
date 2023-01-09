@@ -2,7 +2,7 @@
   <div>
     <transition-group name="list" tag="ul">
     
-      <li v-for="(todoItem,index) in propsdata" :key="todoItem.item" class="shadow">
+      <li v-for="(todoItem,index) in this.$store.state.todoItems" :key="todoItem.item" class="shadow">
         <i class="fa-solid fa-check checkBtn" v-bind:class="{checkBtnCompleted:todoItem.completed}" @click="toggleComplate(todoItem,index)"></i>
         <span :class= "{textCompleted:todoItem.completed}"> {{ todoItem.item }}</span>
         <span class="removeBtn" @click="removeTodo(todoItem,index)">
@@ -15,15 +15,18 @@
 
 <script>
   export default {
-    props:['propsdata'],  
+    
     methods:{
       removeTodo(todoItem,index){
-        this.$emit('removeItem',todoItem,index);
-
+        // this.$emit('removeItem',todoItem,index);
+        let removeobj = {todoItem,index}
+        this.$store.commit('removeOneItem', removeobj)
         
       },
       toggleComplate(todoItem,index){
-       this.$emit('toggleItem',todoItem,index)
+      //  this.$emit('toggleItem',todoItem,index);
+       let toggleobj = {todoItem : todoItem, index:index }
+       this.$store.commit('toggleOneItem',toggleobj)
       }
     }
   }
@@ -68,7 +71,7 @@ li{
 /* 리스트 아이템 트랜지션효과*/
 
 .list-enter-active, .list-leave-active{
-  transition: all 2s
+  transition: all 1s
 }
 .list-enter-from, .list-leave-to{
   opacity:0;
